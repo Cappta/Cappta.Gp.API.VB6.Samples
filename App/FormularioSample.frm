@@ -100,14 +100,15 @@ Begin VB.Form FormularioSample
       _ExtentY        =   13785
       _Version        =   393216
       Tabs            =   7
-      Tab             =   3
       TabsPerRow      =   7
       TabHeight       =   520
       TabCaption(0)   =   "Débito"
       TabPicture(0)   =   "FormularioSample.frx":0000
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "GroupBoxDadosPagamentoDebito"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "ExecutarDebito"
+      Tab(0).Control(1).Enabled=   0   'False
       Tab(0).ControlCount=   2
       TabCaption(1)   =   "Crédito"
       TabPicture(1)   =   "FormularioSample.frx":001C
@@ -123,13 +124,10 @@ Begin VB.Form FormularioSample
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "Reimpressão"
       TabPicture(3)   =   "FormularioSample.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
-      Tab(3).Control(0)=   "UpDown3"
-      Tab(3).Control(0).Enabled=   0   'False
+      Tab(3).ControlEnabled=   0   'False
+      Tab(3).Control(0)=   "ExecutarReimpressao"
       Tab(3).Control(1)=   "GroupBoxReimpressao"
-      Tab(3).Control(1).Enabled=   0   'False
-      Tab(3).Control(2)=   "ExecutarReimpressao"
-      Tab(3).Control(2).Enabled=   0   'False
+      Tab(3).Control(2)=   "UpDown3"
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Cancelamento"
       TabPicture(4)   =   "FormularioSample.frx":0070
@@ -309,7 +307,7 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarReimpressao 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   7680
+         Left            =   -67320
          TabIndex        =   41
          Top             =   6960
          Width           =   2055
@@ -317,7 +315,7 @@ Begin VB.Form FormularioSample
       Begin VB.Frame GroupBoxReimpressao 
          Caption         =   "Dados da Reimpressão"
          Height          =   6135
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   30
          Top             =   700
          Width           =   9500
@@ -492,7 +490,7 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarDebito 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
+         Left            =   7680
          TabIndex        =   13
          Top             =   6960
          Width           =   2055
@@ -500,9 +498,9 @@ Begin VB.Form FormularioSample
       Begin VB.Frame GroupBoxDadosPagamentoDebito 
          Caption         =   "Dados do Pagamento Débito "
          Height          =   6135
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   12
-         Top             =   700
+         Top             =   720
          Width           =   9500
          Begin VB.TextBox TxtValorPagamentoDebito 
             Height          =   285
@@ -523,7 +521,7 @@ Begin VB.Form FormularioSample
       End
       Begin MSComCtl2.UpDown UpDown3 
          Height          =   375
-         Left            =   2400
+         Left            =   -72600
          TabIndex        =   36
          Top             =   2280
          Width           =   255
@@ -706,12 +704,13 @@ Attribute VB_Exposed = False
 Dim cappta As ClienteCappta
 Dim tef As New OperacoesTef
 Dim Via As Long
-
+Dim processandoMultiPagamento As Boolean
 
 Private Sub Form_Load()
     
     Set cappta = CriarClienteCappta.CriarCliente()
     Set tef.TextBoxResultado = TextBoxResultado
+    processandoMultiPagamento = False
     
     IniciarControles
     ConfigurarModoIntegracao (OptionExibirInterfaceSim.Value)
@@ -734,9 +733,17 @@ End Sub
 'Metodos Tef *************************************************************************************
 
 Private Sub ExecutarDebito_Click()
+    If DeveIniciarMultiCartoes() Then
+    Call IniciarMultiCartoes(objCappta)
+    End If
+    
     
     Dim valor As Double
     valor = CDbl(TxtValorPagamentoDebito.Text)
+    
+    If DeveIniciarMultiCartoes() Then
+    Call IniciarMultiCartoes(objCappta)
+    End If
     
     Dim resultado As Long
     resultado = cappta.PagamentoDebito(valor)
@@ -746,7 +753,8 @@ Private Sub ExecutarDebito_Click()
         Exit Sub
     End If
     
-    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, True)
+    MultiTefReset
     
 End Sub
 
@@ -769,7 +777,7 @@ Private Sub ExecutarCredito_Click()
         Exit Sub
     End If
     
-    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
     
 End Sub
 
@@ -789,7 +797,7 @@ Private Sub ExecutarCrediario_Click()
         Exit Sub
     End If
     
-    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
     
 End Sub
 
@@ -818,7 +826,7 @@ Private Sub ExecutarReimpressao_Click()
         Exit Sub
     End If
     
-    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
     
 End Sub
 
@@ -843,7 +851,7 @@ Private Sub ExecutarCancelamento_Click()
     Dim resultado As Long
     resultado = cappta.CancelarPagamento(senhaAdministrativa, numeroControle)
     
-    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
     
 End Sub
 
@@ -867,7 +875,7 @@ Private Sub ExecutarTicketCar_Click()
         Exit Sub
     End If
     
-    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value)
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
     
 End Sub
 
@@ -908,6 +916,25 @@ Private Sub IniciarControles()
     
 End Sub
 
+Private Sub MultiTefReset()
+    
+    Dim quantidadeCartoes As Long
+    quantidadeCartoes = UpDownQuantidadePagamentosMultiTef.Value
+    
+    If quantidadeCartoes <= 0 Then
+        quantidadeCartoes = 2
+        UpDownQuantidadePagamentosMultiTef.Min = 2
+        processandoMultiPagamento = False
+    Else
+        UpDownQuantidadePagamentosMultiTef.Min = 0
+        quantidadeCartoes = quantidadeCartoes - 1
+        processandoMultiPagamento = True
+    End If
+    
+    UpDownQuantidadePagamentosMultiTef.Value = quantidadeCartoes
+    
+End Sub
+
 Private Sub TipoViaSelecionado()
     
     If OptionViaCliente.Value = True Then
@@ -935,7 +962,6 @@ Private Sub PreencherTipoParcelamento()
     ComboBoxTransacaoParceladaPagamentoCredito.AddItem "Loja"
     
 End Sub
-
 
 Private Function InformacaoPinPadSelecionada()
         

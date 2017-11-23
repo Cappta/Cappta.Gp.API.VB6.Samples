@@ -16,13 +16,16 @@ Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 
 Public TextBoxResultado As TextBox
 Public processandoPagamento As Boolean
-Public sessaoMultiTefEmAndamento As Boolean
+Public iniciarMultiTef As Boolean
 Public quantidadeCartoes As Long
 
 
 Private Sub IniciarMultiCartoes(objCappta As ClienteCappta)
     
+   
+    iniciarMultiTef = True
     objCappta.IniciarMultiCartoes (quantidadeCartoes)
+    
     
 End Sub
 
@@ -109,11 +112,11 @@ End Sub
 
 Private Sub ExibirDadosOperacaoRecusada(ByVal result As RespostaOperacaoRecusada)
     
-    If sessaoMultiTefEmAndamento = True Then
+    If iniciarMultiTef = True Then
         
         quantidadeCartoes = 0
         processandoPagamento = False
-        sessaoMultiTefEmAndamento = False
+        iniciarMultiTef = False
     
     End If
     
@@ -138,7 +141,7 @@ Private Sub FinalizarPagamento(cappta As ClienteCappta)
         Exit Sub
     End If
 
-    If sessaoMultiTefEmAndamento = True Then
+    If iniciarMultiTef = True Then
         
         quantidadeCartoes = quantidadeCartoes - 1
         
@@ -152,7 +155,7 @@ Private Sub FinalizarPagamento(cappta As ClienteCappta)
     mensagem = "Clique em OK para confirmar a transação e em Cancelar para desfaze-la"
 
     processandoPagamento = False
-    sessaoMultiTefEmAndamento = False
+    iniciarMultiTef = False
 
     Dim resultado As VbMsgBoxResult
     resultado = MsgBox(mensagem, vbOKCancel, "Cappta Api Sample")
@@ -165,17 +168,15 @@ Private Sub FinalizarPagamento(cappta As ClienteCappta)
 
 End Sub
 
-Public Sub IterarOperacaoTef(objCappta As ClienteCappta, processandoPag As Boolean, multiSessao As Boolean, cartoes As Long)
+Public Sub IterarOperacaoTef(objCappta As ClienteCappta, processandoPag As Boolean)
  
- processandoPagamento = processandoPag
- sessaoMultiTefEmAndamento = multiSessao
- quantidadeCartoes = cartoes
- 
- If sessaoMultiTefEmAndamento = True Then
     
-    Call IniciarMultiCartoes(objCappta)
  
+ If OptionUsarMultiTef_Click() Then
+  OptionNaoUsarMultiTef_Click
  End If
+ 
+ 
  
 
  Dim iteracaoTef As Cappta_Gp_Api_Com.IIteracaoTef
@@ -209,5 +210,402 @@ Public Sub IterarOperacaoTef(objCappta As ClienteCappta, processandoPag As Boole
   Loop While OperacaoNaoFinalizada(iteracaoTef)
 
 End Sub
+
+Private Sub Form_Load()
+    
+    Set cappta = CriarClienteCappta.CriarCliente()
+    Set tef.TextBoxResultado = TextBoxResultado
+    processandoMultiPagamento = False
+    
+    IniciarControles
+    ConfigurarModoIntegracao (OptionExibirInterfaceSim.Value)
+    
+End Sub
+
+Private Sub CriarMensagem(mensagem As String)
+        
+    MsgBox (mensagem)
+    
+End Sub
+
+Private Sub AtualizarResultado(mensagem As String)
+    
+    TextBoxResultado.Text = mensagem
+    TextBoxResultado.Refresh
+
+End Sub
+
+'Metodos Tef *************************************************************************************
+
+Private Sub ExecutarDebito_Click()
+    If DeveIniciarMultiCartoes() Then
+    Call IniciarMultiCartoes(objCappta)
+    End If
+    
+    
+    Dim valor As Double
+    valor = CDbl(TxtValorPagamentoDebito.Text)
+    
+    If DeveIniciarMultiCartoes() Then
+    Call IniciarMultiCartoes(objCappta)
+    End If
+    
+    Dim resultado As Long
+    resultado = cappta.PagamentoDebito(valor)
+    
+    If resultado <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(resultado))
+        Exit Sub
+    End If
+    
+    Call tef.IterarOperacaoTef(cappta, True)
+    MultiTefReset
+    
+End Sub
+
+Private Sub ExecutarCredito_Click()
+    
+    Dim valor As Double
+    valor = CDbl(TxtValorPagamentoCredito.Text)
+    
+    Dim detalhes As New DetalhesCredito
+    
+    detalhes.TransacaoParcelada = OptionTransacaoParceladaCreditoSim.Value
+    detalhes.QuantidadeParcelas = UpDownNumeroParcelasCredito.Value
+    detalhes.TipoParcelamento = TipoParcelamentoSelecionado()
+    
+    Dim resultado As Long
+    resultado = cappta.PagamentoCredito(valor, detalhes)
+    
+    If resultado <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(resultado))
+        Exit Sub
+    End If
+    
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
+    
+End Sub
+
+Private Sub ExecutarCrediario_Click()
+        
+    Dim valor As Double
+    valor = CDbl(TxtValorPagamentoCrediario.Text)
+    
+    Dim detalhes As New DetalhesCrediario
+    detalhes.QuantidadeParcelas = CLng(UpDownNumeroParcelasCrediario.Value)
+    
+    Dim resultado As Long
+    resultado = cappta.PagamentoCrediario(valor, detalhes)
+    
+    If resultado <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(resultado))
+        Exit Sub
+    End If
+    
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
+    
+End Sub
+
+
+Private Sub ExecutarReimpressao_Click()
+    
+    If OptionUsarMultiTef.Value = True Then
+        CriarMensagem ("Não é possível reimprimir um cupom com uma sessão multitef em andamento.")
+        Exit Sub
+    End If
+    
+    Dim resultado As Long
+    
+    If OptionReimprimirUltimoCupomSim.Value = True Then
+    
+        resultado = cappta.ReimprimirUltimoCupom(Via)
+    
+    Else
+    
+        resultado = cappta.ReimprimirCupom(TxtNumeroControleReimpressao.Text, Via)
+    
+    End If
+    
+    If resultado <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(resultado))
+        Exit Sub
+    End If
+    
+    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
+    
+End Sub
+
+Private Sub ExecutarCancelamento_Click()
+    
+    If OptionUsarMultiTef.Value = True Then
+        CriarMensagem ("Não é possível reimprimir um cupom com uma sessão multitef em andamento.")
+        Exit Sub
+    End If
+    
+    Dim senhaAdministrativa As String
+    senhaAdministrativa = TxtSenhaAdministrativaCancelamento.Text
+    
+    If Len(senhaAdministrativa) <= 0 Then
+        CriarMensagem ("A senha administrativa não pode ser vazia")
+        Exit Sub
+    End If
+    
+    Dim numeroControle As String
+    numeroControle = TxtNumeroControleCancelamento.Text
+    
+    Dim resultado As Long
+    resultado = cappta.CancelarPagamento(senhaAdministrativa, numeroControle)
+    
+    Call tef.IterarOperacaoTef(cappta, False, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
+    
+End Sub
+
+Private Sub ExecutarTicketCar_Click()
+    
+    Dim resultado As Long
+    Dim valor As Double
+    
+    valor = TxtValorTicketCar.Text
+    
+    Dim detalhes As New DetalhesPagamentoTicketCarPessoaFisica
+    
+    detalhes.NumeroReciboFiscal = TxtNumeroDocTicketCar.Text
+    detalhes.NumeroSerialECF = TxtNumeroEcfTicketCar.Text
+    
+    resultado = cappta.PagamentoTicketCarPessoaFisica(valor, detalhes)
+    
+    
+    If resultado <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(resultado))
+        Exit Sub
+    End If
+    
+    Call tef.IterarOperacaoTef(cappta, True, OptionUsarMultiTef.Value, UpDownQuantidadePagamentosMultiTef.Value, processandoMultiPagamento)
+    
+End Sub
+
+
+Private Sub ExecutarPinPad_Click()
+    
+    Dim requisicaoPinPad As New RequisicaoInformacaoPinpad
+    requisicaoPinPad.TipoInformacaoPinPad = InformacaoPinPadSelecionada()
+       
+    Dim InformacaoPinPad As String
+    InformacaoPinPad = cappta.SolicitarInformacoesPinpad(requisicaoPinPad)
+    AtualizarResultado (InformacaoPinPad)
+    
+End Sub
+
+Private Sub ConfigurarModoIntegracao(exibirGp As Boolean)
+    
+    Dim configs As New Configuracoes
+    configs.ExibirInterface = exibirGp
+    
+    Dim result As Long
+    result = cappta.Configurar(configs)
+    
+    If result <> 0 Then
+        CriarMensagem (MensagensPainel.mensagem(result))
+    End If
+    
+End Sub
+
+'Metodos Tela (Efeitos, Visibles, Preenchimento de combos *************************************************************************************
+
+Private Sub IniciarControles()
+
+    TipoViaSelecionado
+    LabelQuantidadeDePagamentosMultiTef.Caption = "Quantidade de pagamentos: " & UpDownQuantidadePagamentosMultiTef.Value
+    PreencherInformacoesPinPad
+    PreencherTipoParcelamento
+    
+End Sub
+
+Private Sub MultiTefReset()
+    
+    Dim quantidadeCartoes As Long
+    quantidadeCartoes = UpDownQuantidadePagamentosMultiTef.Value
+    
+    If quantidadeCartoes <= 0 Then
+        quantidadeCartoes = 2
+        UpDownQuantidadePagamentosMultiTef.Min = 2
+        processandoMultiPagamento = False
+    Else
+        UpDownQuantidadePagamentosMultiTef.Min = 0
+        quantidadeCartoes = quantidadeCartoes - 1
+        processandoMultiPagamento = True
+    End If
+    
+    UpDownQuantidadePagamentosMultiTef.Value = quantidadeCartoes
+    
+End Sub
+
+Private Sub TipoViaSelecionado()
+    
+    If OptionViaCliente.Value = True Then
+        Via = TipoVia.TIPO_VIA_CLIENTE
+    ElseIf OptionViaLoja.Value = True Then
+        Via = TipoVia.TIPO_VIA_LOJA
+    Else
+        Via = TipoVia.TIPO_VIA_TODAS
+    End If
+    
+End Sub
+
+
+Private Sub PreencherInformacoesPinPad()
+    
+    ComboBoxTipoEntradaPinPad.AddItem "Solicitar CPF"
+    ComboBoxTipoEntradaPinPad.AddItem "Solicitar Telefone"
+    ComboBoxTipoEntradaPinPad.AddItem "Solicitar Senha"
+    
+End Sub
+
+Private Sub PreencherTipoParcelamento()
+    
+    ComboBoxTransacaoParceladaPagamentoCredito.AddItem "Adminsitrativo"
+    ComboBoxTransacaoParceladaPagamentoCredito.AddItem "Loja"
+    
+End Sub
+
+Private Function InformacaoPinPadSelecionada()
+        
+    InformacaoPinPadSelecionada = ComboBoxTipoEntradaPinPad.ListIndex + 1
+    
+End Function
+
+Private Function TipoParcelamentoSelecionado()
+    
+    TipoParcelamentoSelecionado = ComboBoxTransacaoParceladaPagamentoCredito.ListIndex + 1
+    
+End Function
+
+Private Sub NaoReimprimirUltimoCupomSelecionado(selecionado As Boolean)
+    
+    LabelNumeroControleReimpressao.visible = selecionado
+    TxtNumeroControleReimpressao.visible = selecionado
+    UpDownNumeroControleReimpressao.visible = selecionado
+    
+End Sub
+
+Private Sub UtilizarMultiTefSelecionado(selecionado As Boolean)
+    
+    LabelQuantidadeDePagamentosMultiTef.visible = selecionado
+    UpDownQuantidadePagamentosMultiTef.visible = selecionado
+    
+End Sub
+
+Private Sub OptionExibirInterfaceNao_Click()
+    
+    ConfigurarModoIntegracao (OptionExibirInterfaceSim.Value)
+    
+End Sub
+
+Private Sub OptionExibirInterfaceSim_Click()
+    
+    ConfigurarModoIntegracao (OptionExibirInterfaceSim.Value)
+
+End Sub
+
+Private Sub TransacaoParceladaSelecionada(visible As Boolean)
+    
+    GroupBoxDadosParcelamentoCredito.visible = visible
+    
+End Sub
+
+
+Private Sub OptionReimprimirUltimoCupomNao_Click()
+    
+    NaoReimprimirUltimoCupomSelecionado (OptionReimprimirUltimoCupomNao.Value)
+    
+End Sub
+
+Private Sub OptionReimprimirUltimoCupomSim_Click()
+
+    NaoReimprimirUltimoCupomSelecionado (OptionReimprimirUltimoCupomNao.Value)
+    
+End Sub
+
+Private Sub OptionTransacaoParceladaCreditoNao_Click()
+
+    TransacaoParceladaSelecionada (OptionTransacaoParceladaCreditoSim.Value)
+
+End Sub
+
+Private Sub OptionTransacaoParceladaCreditoSim_Click()
+
+    TransacaoParceladaSelecionada (OptionTransacaoParceladaCreditoSim.Value)
+    
+End Sub
+
+Private Sub OptionViaCliente_Click()
+    
+    TipoViaSelecionado
+
+End Sub
+
+Private Sub OptionViaLoja_Click()
+    
+    TipoViaSelecionado
+
+End Sub
+
+Private Sub OptionViaTodas_Click()
+    
+    TipoViaSelecionado
+
+End Sub
+
+Private Sub OptionNaoUsarMultiTef_Click()
+    
+    UtilizarMultiTefSelecionado (OptionUsarMultiTef.Value)
+    DesabilitarBotoes
+    DesabilitarControle
+    
+End Sub
+
+Private Sub OptionUsarMultiTef_Click()
+    
+    UtilizarMultiTefSelecionado (OptionUsarMultiTef.Value)
+
+End Sub
+Private Sub DesabilitarBotoes()
+
+    Call DesabilitarControle(ExecutarDebito_Click)
+    Call DesabilitarControle(ExecutarCrediario_Click)
+    Call DesabilitarControle(ExecutarCancelamento_Click)
+    Call DesabilitarControle(ExecutarReimpressao_Click)
+    Call DesabilitarControle(ExecutarCredito_Click)
+    
+End Sub
+
+Private Sub DesabilitarControlesMultiTef()
+OptionNaoUsarMultiTef_Click
+End Sub
+Private Sub DesabilitarControle(controle As Control)
+controle.Enabled = False
+End Sub
+
+
+
+Private Sub UpDownQuantidadePagamentosMultiTef_Change()
+    
+    LabelQuantidadeDePagamentosMultiTef.Caption = "Quantidade de pagamentos: " & UpDownQuantidadePagamentosMultiTef.Value
+    
+End Sub
+
+Private Sub UpDownNumeroParcelasCrediario_Change()
+    
+    TxtNumeroParcelasCrediario.Text = UpDownNumeroParcelasCrediario.Value
+
+End Sub
+
+Private Sub UpDownNumeroParcelasCredito_Change()
+    
+    TxtNumeroParcelasPagamentoCredito.Text = UpDownNumeroParcelasCredito.Value
+
+End Sub
+
+
 
 

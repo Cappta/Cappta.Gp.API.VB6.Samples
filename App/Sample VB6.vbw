@@ -1,8 +1,8 @@
-FormularioSample = 57, 355, 1379, 1005, , 26, 26, 1348, 676, C
-CriarClienteCappta = 104, 104, 1204, 754, 
-Mensagens = 78, 78, 1387, 492, 
-MensagensPainel = 0, 0, 0, 0, C
-TipoInformacaoPinPad = 0, 0, 0, 0, C
-TipoParcelamento = 0, 0, 0, 0, C
-TipoVia = 0, 0, 0, 0, C
-OperacoesTef = 0, 0, 0, 0, C
+FormularioSample = 4033, 64, 5355, 483, CZ, 26, 26, 1348, 676, C
+CriarClienteCappta = 104, 104, 1204, 754, C
+Mensagens = 4451, 108, 5760, 522, C
+MensagensPainel = 39, 113, 1119, 988, C
+TipoInformacaoPinPad = 39, 113, 486, 988, C
+TipoParcelamento = 39, 113, 486, 988, C
+TipoVia = 39, 113, 486, 988, C
+OperacoesTef = 4189, 316, 5075, 1191, C

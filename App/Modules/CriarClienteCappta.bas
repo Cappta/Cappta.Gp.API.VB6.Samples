@@ -1,7 +1,7 @@
 Attribute VB_Name = "CriarClienteCappta"
 Private Const ChavePDV As String = "795180024C04479982560F61B3C2C06E"
 Private Const CNPJ As String = "34555898000186"
-Private Const NumeroPDV As Long = 90
+Private Const NumeroPDV As Long = 6
 
 
 
