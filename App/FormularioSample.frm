@@ -116,39 +116,39 @@ Begin VB.Form FormularioSample
       TabCaption(1)   =   "Crédito"
       TabPicture(1)   =   "FormularioSample.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "GroupBoxDadosPagamentoCredito"
-      Tab(1).Control(1)=   "ExecutarCredito"
+      Tab(1).Control(0)=   "ExecutarCredito"
+      Tab(1).Control(1)=   "GroupBoxDadosPagamentoCredito"
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Crediário"
       TabPicture(2)   =   "FormularioSample.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "GroupBoxPagamentoCrediario"
-      Tab(2).Control(1)=   "ExecutarCrediario"
+      Tab(2).Control(0)=   "ExecutarCrediario"
+      Tab(2).Control(1)=   "GroupBoxPagamentoCrediario"
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "Reimpressão"
       TabPicture(3)   =   "FormularioSample.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "UpDown3"
+      Tab(3).Control(0)=   "ExecutarReimpressao"
       Tab(3).Control(1)=   "GroupBoxReimpressao"
-      Tab(3).Control(2)=   "ExecutarReimpressao"
+      Tab(3).Control(2)=   "UpDown3"
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Cancelamento"
       TabPicture(4)   =   "FormularioSample.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "GroupBoxDadosCancelamento"
-      Tab(4).Control(1)=   "ExecutarCancelamento"
+      Tab(4).Control(0)=   "ExecutarCancelamento"
+      Tab(4).Control(1)=   "GroupBoxDadosCancelamento"
       Tab(4).ControlCount=   2
       TabCaption(5)   =   "TicketCar"
       TabPicture(5)   =   "FormularioSample.frx":008C
       Tab(5).ControlEnabled=   0   'False
-      Tab(5).Control(0)=   "GroupBoxTicketCar"
-      Tab(5).Control(1)=   "ExecutarTicketCar"
+      Tab(5).Control(0)=   "ExecutarTicketCar"
+      Tab(5).Control(1)=   "GroupBoxTicketCar"
       Tab(5).ControlCount=   2
       TabCaption(6)   =   "PinPad"
       TabPicture(6)   =   "FormularioSample.frx":00A8
       Tab(6).ControlEnabled=   0   'False
-      Tab(6).Control(0)=   "Frame6"
-      Tab(6).Control(1)=   "ExecutarPinPad"
+      Tab(6).Control(0)=   "ExecutarPinPad"
+      Tab(6).Control(1)=   "Frame6"
       Tab(6).ControlCount=   2
       Begin VB.CommandButton ExecutarPinPad 
          Caption         =   "Executar Operação"
@@ -716,7 +716,7 @@ Public processandoPagamento As Boolean
 Public quantidadeCartoes As Long
 Private Const ChavePDV As String = "795180024C04479982560F61B3C2C06E"
 Private Const CNPJ As String = "34555898000186"
-Private Const NumeroPDV As Long = 6
+Private Const NumeroPDV As Long = 1
 
 Private Sub Form_Load()
    

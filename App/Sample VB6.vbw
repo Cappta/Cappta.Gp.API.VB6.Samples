@@ -1,6 +1,6 @@
-FormularioSample = 3959, 205, 5094, 1061, C, 26, 26, 1348, 676, C
-Mensagens = 4451, 108, 5760, 522, C
-MensagensPainel = 4225, 113, 5305, 988, C
-TipoInformacaoPinPad = 39, 113, 486, 988, C
-TipoParcelamento = 39, 113, 486, 988, C
-TipoVia = 39, 113, 486, 988, C
+FormularioSample = 0, 0, 0, 0, C, 0, 0, 0, 0, C
+Mensagens = 0, 0, 0, 0, C
+MensagensPainel = 0, 0, 0, 0, C
+TipoInformacaoPinPad = 0, 0, 0, 0, C
+TipoParcelamento = 0, 0, 0, 0, C
+TipoVia = 0, 0, 0, 0, C
