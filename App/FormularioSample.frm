@@ -3,42 +3,61 @@ Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FormularioSample 
    Caption         =   "VB6 Sample"
-   ClientHeight    =   8835
+   ClientHeight    =   7860
    ClientLeft      =   6075
    ClientTop       =   1410
-   ClientWidth     =   15675
+   ClientWidth     =   14850
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   8835
-   ScaleWidth      =   15675
+   ScaleHeight     =   7860
+   ScaleWidth      =   14850
    ShowInTaskbar   =   0   'False
    Begin VB.TextBox UpDownQuantidadePagamentosMultiTef 
       Height          =   285
-      Left            =   5880
-      TabIndex        =   69
+      Left            =   8640
+      TabIndex        =   67
       Text            =   "2"
       Top             =   480
-      Width           =   615
+      Visible         =   0   'False
+      Width           =   375
    End
    Begin VB.Frame Frame2 
       Height          =   615
-      Left            =   11160
+      Left            =   9480
       TabIndex        =   7
-      Top             =   120
-      Width           =   4455
+      Top             =   240
+      Width           =   5175
       Begin VB.OptionButton OptionExibirInterfaceNao 
          Caption         =   "Invisível"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
-         Left            =   3240
+         Left            =   3480
          TabIndex        =   10
          Top             =   240
-         Width           =   975
+         Width           =   1335
       End
       Begin VB.OptionButton OptionExibirInterfaceSim 
          Caption         =   "Visível"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
-         Left            =   2160
+         Left            =   2280
          TabIndex        =   9
          Top             =   240
          Value           =   -1  'True
@@ -46,17 +65,35 @@ Begin VB.Form FormularioSample
       End
       Begin VB.Label Label3 
          Caption         =   "Modo de Integração: "
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   240
          TabIndex        =   8
          Top             =   240
-         Width           =   1575
+         Width           =   2175
       End
    End
    Begin VB.OptionButton OptionNaoUsarMultiTef 
       Caption         =   "Não"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
-      Left            =   2160
+      Left            =   3240
       TabIndex        =   4
       Top             =   480
       Value           =   -1  'True
@@ -64,21 +101,30 @@ Begin VB.Form FormularioSample
    End
    Begin VB.OptionButton OptionUsarMultiTef 
       Caption         =   "Sim"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
-      Left            =   1440
+      Left            =   2160
       TabIndex        =   3
       Top             =   480
       Width           =   735
    End
    Begin VB.Frame GroupBoxResultadoPagamentoDebito 
       Caption         =   "Resultado"
-      Height          =   7815
-      Left            =   10440
+      Height          =   6615
+      Left            =   9480
       TabIndex        =   1
       Top             =   960
       Width           =   5175
       Begin VB.TextBox TextBoxResultado 
-         Height          =   7335
+         Height          =   6255
          Left            =   120
          MultiLine       =   -1  'True
          TabIndex        =   6
@@ -87,39 +133,45 @@ Begin VB.Form FormularioSample
       End
    End
    Begin TabDlg.SSTab TabTicketCar 
-      Height          =   7815
+      Height          =   6615
       Left            =   240
       TabIndex        =   0
       Top             =   960
-      Width           =   9975
-      _ExtentX        =   17595
-      _ExtentY        =   13785
+      Width           =   9015
+      _ExtentX        =   15901
+      _ExtentY        =   11668
       _Version        =   393216
       Tabs            =   7
-      Tab             =   3
+      Tab             =   6
       TabsPerRow      =   7
       TabHeight       =   520
       TabCaption(0)   =   "Débito"
       TabPicture(0)   =   "FormularioSample.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "GroupBoxDadosPagamentoDebito"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "ExecutarDebito"
+      Tab(0).Control(1).Enabled=   0   'False
       Tab(0).ControlCount=   2
       TabCaption(1)   =   "Crédito"
       TabPicture(1)   =   "FormularioSample.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "GroupBoxDadosPagamentoCredito"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "ExecutarCredito"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Crediário"
       TabPicture(2)   =   "FormularioSample.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "ExecutarCrediario"
-      Tab(2).Control(1)=   "GroupBoxPagamentoCrediario"
+      Tab(2).Control(0)=   "GroupBoxPagamentoCrediario"
+      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(1)=   "ExecutarCrediario"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "Reimpressão"
       TabPicture(3)   =   "FormularioSample.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "UpDown3"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "GroupBoxReimpressao"
@@ -130,40 +182,46 @@ Begin VB.Form FormularioSample
       TabCaption(4)   =   "Cancelamento"
       TabPicture(4)   =   "FormularioSample.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "ExecutarCancelamento"
-      Tab(4).Control(1)=   "GroupBoxDadosCancelamento"
+      Tab(4).Control(0)=   "GroupBoxDadosCancelamento"
+      Tab(4).Control(0).Enabled=   0   'False
+      Tab(4).Control(1)=   "ExecutarCancelamento"
+      Tab(4).Control(1).Enabled=   0   'False
       Tab(4).ControlCount=   2
       TabCaption(5)   =   "TicketCar"
       TabPicture(5)   =   "FormularioSample.frx":008C
       Tab(5).ControlEnabled=   0   'False
-      Tab(5).Control(0)=   "ExecutarTicketCar"
-      Tab(5).Control(1)=   "GroupBoxTicketCar"
+      Tab(5).Control(0)=   "GroupBoxTicketCar"
+      Tab(5).Control(0).Enabled=   0   'False
+      Tab(5).Control(1)=   "ExecutarTicketCar"
+      Tab(5).Control(1).Enabled=   0   'False
       Tab(5).ControlCount=   2
       TabCaption(6)   =   "PinPad"
       TabPicture(6)   =   "FormularioSample.frx":00A8
-      Tab(6).ControlEnabled=   0   'False
-      Tab(6).Control(0)=   "ExecutarPinPad"
-      Tab(6).Control(1)=   "Frame6"
+      Tab(6).ControlEnabled=   -1  'True
+      Tab(6).Control(0)=   "Frame6"
+      Tab(6).Control(0).Enabled=   0   'False
+      Tab(6).Control(1)=   "ExecutarPinPad"
+      Tab(6).Control(1).Enabled=   0   'False
       Tab(6).ControlCount=   2
       Begin VB.CommandButton ExecutarPinPad 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
-         TabIndex        =   56
-         Top             =   6960
+         Left            =   1200
+         TabIndex        =   55
+         Top             =   3240
          Width           =   2055
       End
       Begin VB.Frame Frame6 
          Caption         =   "Solicitar Informações no Papel"
-         Height          =   6135
-         Left            =   -74760
-         TabIndex        =   54
-         Top             =   700
-         Width           =   9500
+         Height          =   3255
+         Left            =   240
+         TabIndex        =   53
+         Top             =   840
+         Width           =   4335
          Begin VB.ComboBox ComboBoxTipoEntradaPinPad 
             Height          =   315
             Left            =   480
-            TabIndex        =   64
+            TabIndex        =   62
             Top             =   960
             Width           =   2895
          End
@@ -171,7 +229,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Tipo de Entrada pinpad:"
             Height          =   255
             Left            =   495
-            TabIndex        =   55
+            TabIndex        =   54
             Top             =   645
             Width           =   2280
          End
@@ -179,23 +237,23 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarTicketCar 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
-         TabIndex        =   53
-         Top             =   6960
+         Left            =   -72600
+         TabIndex        =   52
+         Top             =   3960
          Width           =   2055
       End
       Begin VB.Frame GroupBoxTicketCar 
          Caption         =   "Dados de Pagamento Ticket Car"
-         Height          =   6135
-         Left            =   -74760
-         TabIndex        =   46
-         Top             =   700
-         Width           =   9500
+         Height          =   4455
+         Left            =   -74640
+         TabIndex        =   45
+         Top             =   720
+         Width           =   7215
          Begin VB.TextBox TxtNumeroDocTicketCar 
             Height          =   375
             Left            =   3840
             Locked          =   -1  'True
-            TabIndex        =   52
+            TabIndex        =   51
             Top             =   2000
             Width           =   1935
          End
@@ -203,14 +261,14 @@ Begin VB.Form FormularioSample
             Height          =   375
             Left            =   500
             Locked          =   -1  'True
-            TabIndex        =   48
+            TabIndex        =   47
             Top             =   2000
             Width           =   1935
          End
          Begin VB.TextBox TxtValorTicketCar 
             Height          =   285
             Left            =   500
-            TabIndex        =   47
+            TabIndex        =   46
             Text            =   "0,10"
             Top             =   1000
             Width           =   1935
@@ -219,7 +277,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Número Doc. Fiscal"
             Height          =   255
             Left            =   3840
-            TabIndex        =   51
+            TabIndex        =   50
             Top             =   1650
             Width           =   2055
          End
@@ -227,7 +285,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Número de Série do ECF:"
             Height          =   255
             Left            =   500
-            TabIndex        =   50
+            TabIndex        =   49
             Top             =   1650
             Width           =   2055
          End
@@ -235,7 +293,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Valor: "
             Height          =   255
             Left            =   500
-            TabIndex        =   49
+            TabIndex        =   48
             Top             =   650
             Width           =   975
          End
@@ -243,22 +301,22 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarCancelamento 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
-         TabIndex        =   45
-         Top             =   6960
+         Left            =   -74160
+         TabIndex        =   44
+         Top             =   3480
          Width           =   2055
       End
       Begin VB.Frame GroupBoxDadosCancelamento 
          Caption         =   "Dados do Cancelamento"
-         Height          =   6135
+         Height          =   3495
          Left            =   -74760
-         TabIndex        =   40
-         Top             =   700
-         Width           =   9500
+         TabIndex        =   39
+         Top             =   720
+         Width           =   3615
          Begin VB.TextBox TxtNumeroControleCancelamento 
             Height          =   375
             Left            =   500
-            TabIndex        =   42
+            TabIndex        =   41
             Text            =   "1"
             Top             =   2000
             Width           =   1935
@@ -266,7 +324,7 @@ Begin VB.Form FormularioSample
          Begin VB.TextBox TxtSenhaAdministrativaCancelamento 
             Height          =   285
             Left            =   500
-            TabIndex        =   41
+            TabIndex        =   40
             Text            =   "cappta"
             Top             =   1000
             Width           =   1935
@@ -275,7 +333,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Número de Controle"
             Height          =   255
             Left            =   500
-            TabIndex        =   44
+            TabIndex        =   43
             Top             =   1650
             Width           =   2055
          End
@@ -283,7 +341,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Senha Administrativa"
             Height          =   255
             Left            =   500
-            TabIndex        =   43
+            TabIndex        =   42
             Top             =   650
             Width           =   2055
          End
@@ -291,23 +349,23 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarReimpressao 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   7680
-         TabIndex        =   39
-         Top             =   6960
+         Left            =   -72960
+         TabIndex        =   38
+         Top             =   5040
          Width           =   2055
       End
       Begin VB.Frame GroupBoxReimpressao 
          Caption         =   "Dados da Reimpressão"
-         Height          =   6135
-         Left            =   240
-         TabIndex        =   29
-         Top             =   700
-         Width           =   9500
+         Height          =   5295
+         Left            =   -74760
+         TabIndex        =   28
+         Top             =   840
+         Width           =   6375
          Begin VB.OptionButton OptionReimprimirUltimoCupomNao 
             Caption         =   "Não"
             Height          =   255
             Left            =   1680
-            TabIndex        =   34
+            TabIndex        =   33
             Top             =   1080
             Value           =   -1  'True
             Width           =   975
@@ -316,14 +374,14 @@ Begin VB.Form FormularioSample
             Caption         =   "Sim"
             Height          =   255
             Left            =   500
-            TabIndex        =   33
+            TabIndex        =   32
             Top             =   1080
             Width           =   975
          End
          Begin VB.TextBox TxtNumeroControleReimpressao 
             Height          =   375
             Left            =   4000
-            TabIndex        =   30
+            TabIndex        =   29
             Text            =   "2"
             Top             =   1950
             Width           =   1815
@@ -332,14 +390,14 @@ Begin VB.Form FormularioSample
             BorderStyle     =   0  'None
             Height          =   735
             Left            =   240
-            TabIndex        =   65
+            TabIndex        =   63
             Top             =   1680
             Width           =   3495
             Begin VB.OptionButton OptionViaCliente 
                Caption         =   "Cliente"
                Height          =   255
                Left            =   1320
-               TabIndex        =   68
+               TabIndex        =   66
                Top             =   250
                Width           =   975
             End
@@ -347,7 +405,7 @@ Begin VB.Form FormularioSample
                Caption         =   "Todas"
                Height          =   255
                Left            =   120
-               TabIndex        =   67
+               TabIndex        =   65
                Top             =   250
                Value           =   -1  'True
                Width           =   975
@@ -356,7 +414,7 @@ Begin VB.Form FormularioSample
                Caption         =   "Loja"
                Height          =   255
                Left            =   2520
-               TabIndex        =   66
+               TabIndex        =   64
                Top             =   250
                Width           =   975
             End
@@ -365,7 +423,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Qual via ?"
             Height          =   255
             Left            =   500
-            TabIndex        =   38
+            TabIndex        =   37
             Top             =   1650
             Width           =   2055
          End
@@ -373,7 +431,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Número do Controle"
             Height          =   255
             Left            =   4000
-            TabIndex        =   32
+            TabIndex        =   31
             Top             =   1650
             Width           =   2055
          End
@@ -381,7 +439,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Reimprimir Último Cupom"
             Height          =   255
             Left            =   500
-            TabIndex        =   31
+            TabIndex        =   30
             Top             =   650
             Width           =   2055
          End
@@ -389,18 +447,18 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarCrediario 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
-         TabIndex        =   28
-         Top             =   6960
+         Left            =   -73560
+         TabIndex        =   27
+         Top             =   3480
          Width           =   2055
       End
       Begin VB.Frame GroupBoxPagamentoCrediario 
          Caption         =   "Dados do Pagamento Crediário"
-         Height          =   6135
+         Height          =   3615
          Left            =   -74760
          TabIndex        =   22
-         Top             =   700
-         Width           =   9500
+         Top             =   720
+         Width           =   4935
          Begin VB.TextBox TxtValorPagamentoCrediario 
             Height          =   285
             Left            =   500
@@ -416,27 +474,13 @@ Begin VB.Form FormularioSample
             TabIndex        =   23
             Text            =   "1"
             Top             =   1900
-            Width           =   1935
-         End
-         Begin MSComCtl2.UpDown UpDownNumeroParcelasCrediario 
-            Height          =   390
-            Left            =   2400
-            TabIndex        =   25
-            Top             =   1900
-            Width           =   255
-            _ExtentX        =   450
-            _ExtentY        =   688
-            _Version        =   393216
-            Value           =   2
-            Max             =   24
-            Min             =   1
-            Enabled         =   -1  'True
+            Width           =   480
          End
          Begin VB.Label LabelValorCrediario 
             Caption         =   "Valor: "
             Height          =   255
             Left            =   500
-            TabIndex        =   27
+            TabIndex        =   26
             Top             =   650
             Width           =   975
          End
@@ -444,7 +488,7 @@ Begin VB.Form FormularioSample
             Caption         =   "Quantidade de Parcelas"
             Height          =   255
             Left            =   500
-            TabIndex        =   26
+            TabIndex        =   25
             Top             =   1500
             Width           =   2055
          End
@@ -452,26 +496,26 @@ Begin VB.Form FormularioSample
       Begin VB.CommandButton ExecutarCredito 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
+         Left            =   -72720
          TabIndex        =   21
-         Top             =   6960
+         Top             =   5400
          Width           =   2055
       End
       Begin VB.CommandButton ExecutarDebito 
          Caption         =   "Executar Operação"
          Height          =   495
-         Left            =   -67320
+         Left            =   -74280
          TabIndex        =   12
-         Top             =   6960
+         Top             =   2760
          Width           =   2055
       End
       Begin VB.Frame GroupBoxDadosPagamentoDebito 
          Caption         =   "Dados do Pagamento Débito "
-         Height          =   6135
+         Height          =   2895
          Left            =   -74760
          TabIndex        =   11
-         Top             =   840
-         Width           =   9500
+         Top             =   720
+         Width           =   3855
          Begin VB.TextBox TxtValorPagamentoDebito 
             Height          =   285
             Left            =   500
@@ -491,8 +535,8 @@ Begin VB.Form FormularioSample
       End
       Begin MSComCtl2.UpDown UpDown3 
          Height          =   375
-         Left            =   2400
-         TabIndex        =   35
+         Left            =   -72600
+         TabIndex        =   34
          Top             =   2280
          Width           =   255
          _ExtentX        =   450
@@ -505,11 +549,11 @@ Begin VB.Form FormularioSample
       End
       Begin VB.Frame GroupBoxDadosPagamentoCredito 
          Caption         =   "Dados do Pagamento Crédito"
-         Height          =   6135
+         Height          =   5415
          Left            =   -74760
          TabIndex        =   15
          Top             =   700
-         Width           =   9500
+         Width           =   6735
          Begin VB.OptionButton OptionTransacaoParceladaCreditoNao 
             Caption         =   "Não"
             Height          =   255
@@ -539,33 +583,19 @@ Begin VB.Form FormularioSample
             Caption         =   "Dados Parcelamento"
             DragMode        =   1  'Automatic
             Height          =   2415
-            Left            =   480
-            TabIndex        =   58
-            Top             =   2400
+            Left            =   360
+            TabIndex        =   57
+            Top             =   2040
             Visible         =   0   'False
             Width           =   4815
-            Begin MSComCtl2.UpDown UpDownNumeroParcelasCredito 
-               Height          =   300
-               Left            =   3840
-               TabIndex        =   63
-               Top             =   1680
-               Width           =   255
-               _ExtentX        =   450
-               _ExtentY        =   529
-               _Version        =   393216
-               Value           =   2
-               Max             =   24
-               Min             =   2
-               Enabled         =   -1  'True
-            End
             Begin VB.TextBox TxtNumeroParcelasPagamentoCredito 
                Height          =   300
                Left            =   360
                Locked          =   -1  'True
-               TabIndex        =   62
+               TabIndex        =   61
                Text            =   "2"
                Top             =   1680
-               Width           =   3495
+               Width           =   615
             End
             Begin VB.ComboBox ComboBoxTransacaoParceladaPagamentoCredito 
                Height          =   315
@@ -573,7 +603,7 @@ Begin VB.Form FormularioSample
                Left            =   360
                List            =   "FormularioSample.frx":00CE
                Style           =   2  'Dropdown List
-               TabIndex        =   61
+               TabIndex        =   60
                Top             =   840
                Width           =   3495
             End
@@ -581,7 +611,7 @@ Begin VB.Form FormularioSample
                Caption         =   "Número de Parcelas"
                Height          =   255
                Left            =   360
-               TabIndex        =   60
+               TabIndex        =   59
                Top             =   1320
                Width           =   2055
             End
@@ -589,7 +619,7 @@ Begin VB.Form FormularioSample
                Caption         =   "Transação Parcelada ?"
                Height          =   255
                Left            =   350
-               TabIndex        =   59
+               TabIndex        =   58
                Top             =   480
                Width           =   2055
             End
@@ -615,7 +645,7 @@ Begin VB.Form FormularioSample
    Begin MSComCtl2.UpDown UpDown4 
       Height          =   375
       Left            =   2400
-      TabIndex        =   36
+      TabIndex        =   35
       Top             =   3240
       Width           =   255
       _ExtentX        =   450
@@ -629,7 +659,7 @@ Begin VB.Form FormularioSample
    Begin MSComCtl2.UpDown UpDown5 
       Height          =   375
       Left            =   4200
-      TabIndex        =   37
+      TabIndex        =   36
       Top             =   2040
       Width           =   255
       _ExtentX        =   450
@@ -644,28 +674,46 @@ Begin VB.Form FormularioSample
       Caption         =   "Transação Parcelada ?"
       Height          =   255
       Left            =   1320
-      TabIndex        =   57
+      TabIndex        =   56
       Top             =   5160
       Width           =   2055
    End
    Begin VB.Label LabelQuantidadeDePagamentosMultiTef 
       Alignment       =   1  'Right Justify
       Caption         =   "Quantidade de pagamentos:"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
-      Left            =   3240
+      Left            =   5400
       TabIndex        =   5
       Top             =   480
       UseMnemonic     =   0   'False
       Visible         =   0   'False
-      Width           =   2415
+      Width           =   2895
    End
    Begin VB.Label LabelUsarMultiTef 
       Caption         =   "Usar MultiTef?"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   255
-      Left            =   240
+      Left            =   360
       TabIndex        =   2
       Top             =   480
-      Width           =   1215
+      Width           =   1695
    End
 End
 Attribute VB_Name = "FormularioSample"
@@ -726,11 +774,7 @@ Private Sub ExecutarDebito_Click()
      
     Dim valor As Double
     valor = CDbl(TxtValorPagamentoDebito.Text)
-    
-     If DeveIniciarMultiCartoes() Then
-        IniciarMultiCartoes
-    End If
-        
+      
     Dim resultado As Long
     resultado = cappta.PagamentoDebito(valor)
     
@@ -745,6 +789,10 @@ Private Sub ExecutarDebito_Click()
 End Sub
 
 Private Sub ExecutarCredito_Click()
+
+    If DeveIniciarMultiCartoes() Then
+        IniciarMultiCartoes
+    End If
     
     Dim valor As Double
     valor = CDbl(TxtValorPagamentoCredito.Text)
@@ -839,7 +887,7 @@ Private Sub ExecutarCancelamento_Click()
     Dim resultado As Long
     resultado = cappta.CancelarPagamento(senhaAdministrativa, numeroControle)
     
-     Call IterarOperacaoTef(cappta)
+    Call IterarOperacaoTef(cappta)
     
 End Sub
 
@@ -863,7 +911,7 @@ Private Sub ExecutarTicketCar_Click()
         Exit Sub
     End If
     
-     Call IterarOperacaoTef(cappta)
+    Call IterarOperacaoTef(cappta)
     
 End Sub
 
@@ -909,13 +957,13 @@ End Function
 Private Sub IniciarControles()
 
     TipoViaSelecionado
-    LabelQuantidadeDePagamentosMultiTef.Caption = "Quantidade de pagamentos: " & CInt(UpDownQuantidadePagamentosMultiTef.Text)
+    LabelQuantidadeDePagamentosMultiTef.Caption = "Quantidade de pagamentos: "
     PreencherInformacoesPinPad
     PreencherTipoParcelamento
     
 End Sub
 
-Private Sub DesabilitarControle(controle As control)
+Private Sub DesabilitarControle(controle As Control)
    controle.Enabled = False
 End Sub
 
@@ -1053,20 +1101,6 @@ Private Sub OptionUsarMultiTef_Click()
     
 End Sub
 
-
-
-'Private Sub UpDownQuantidadePagamentosMultiTef_Change()
-    
-    'LabelQuantidadeDePagamentosMultiTef.Caption = "Quantidade de pagamentos: " & UpDownQuantidadePagamentosMultiTef.Value
-    
-'End Sub
-
-Private Sub UpDownNumeroParcelasCrediario_Change()
-    
-    TxtNumeroParcelasCrediario.Text = UpDownNumeroParcelasCrediario.Value
-
-End Sub
-
 Private Sub UpDownNumeroParcelasCredito_Change()
     
     TxtNumeroParcelasPagamentoCredito.Text = UpDownNumeroParcelasCredito.Value
@@ -1076,7 +1110,7 @@ End Sub
 
 Private Sub IniciarMultiCartoes()
 
-quantidadeCartoes = UpDownQuantidadePagamentosMultiTef.Value
+quantidadeCartoes = CInt(UpDownQuantidadePagamentosMultiTef.Text)
 sessaoMultiTefEmAndamento = True
 cappta.IniciarMultiCartoes (quantidadeCartoes)
     
@@ -1269,8 +1303,8 @@ Public Sub IterarOperacaoTef(objCappta As ClienteCappta)
 
 End Sub
 
-Private Sub HabilitarControle(control As control)
-    control.Enabled = True
+Private Sub HabilitarControle(Control As Control)
+    Control.Enabled = True
 End Sub
 
 Private Sub DesabilitarBotoes()
